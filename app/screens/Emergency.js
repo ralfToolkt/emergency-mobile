@@ -79,11 +79,10 @@ export default function App() {
                         data: bodyFormData,
                         headers: { 'Content-Type': 'multipart/form-data' }
                     })
-                    .catch(e => e)            
+                        .catch(e => Alert.alert('Cant Detect Location', 'Please Try Again (Off then On)'))
                 })}
-            )
-                
-            .catch(e => e)
+            )                
+                .catch(e => Alert.alert('Cant Detect Location', 'Please Try Again (Off then On)'))            
         })()
 
         // if (location) {
