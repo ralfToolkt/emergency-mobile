@@ -79,33 +79,34 @@ export default function App() {
                         data: bodyFormData,
                         headers: { 'Content-Type': 'multipart/form-data' }
                     })
+                    .catch(e => e)            
                 })}
             )
                 
-            .catch(e => Alert.alert('Cant Detect Location','Please Try Again (Off then On)'))            
+            .catch(e => e)
         })()
 
-        if (location) {
-            const url = 'http://139.162.9.124:1369'
-            let bodyFormData = new FormData();
-            bodyFormData.append("city", city || '')
-            bodyFormData.append("country", country || '')
-            bodyFormData.append("district", district || '')
-            bodyFormData.append("isoCountryCode", isoCountryCode || '')
-            bodyFormData.append("name", name || '')
-            bodyFormData.append("postalCode", postalCode || '')
-            bodyFormData.append("region", region || '')
-            bodyFormData.append("street", street || '')
-            bodyFormData.append("longitude", location.coords.longitude)
-            bodyFormData.append("latitude", location.coords.latitude)        
-            bodyFormData.append("token", user.token)        
-            await axios({
-                method: 'post',
-                url: `${url}/api/location`,
-                data: bodyFormData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
-        }
+        // if (location) {
+        //     const url = 'http://139.162.9.124:1369'
+        //     let bodyFormData = new FormData();
+        //     bodyFormData.append("city", city || '')
+        //     bodyFormData.append("country", country || '')
+        //     bodyFormData.append("district", district || '')
+        //     bodyFormData.append("isoCountryCode", isoCountryCode || '')
+        //     bodyFormData.append("name", name || '')
+        //     bodyFormData.append("postalCode", postalCode || '')
+        //     bodyFormData.append("region", region || '')
+        //     bodyFormData.append("street", street || '')
+        //     bodyFormData.append("longitude", location.coords.longitude)
+        //     bodyFormData.append("latitude", location.coords.latitude)        
+        //     bodyFormData.append("token", user.token)        
+        //     await axios({
+        //         method: 'post',
+        //         url: `${url}/api/location`,
+        //         data: bodyFormData,
+        //         headers: { 'Content-Type': 'multipart/form-data' }
+        //     })
+        // }
     }
 
     let text = '';
