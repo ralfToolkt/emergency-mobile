@@ -37,7 +37,7 @@ export default function App() {
         console.log(getLocation);
         if (getLocation === true) {
             getPosition()
-            setIntervalSending(setInterval(() => getPosition(), 10000))
+            setIntervalSending(setInterval(() => getPosition(), 60000))
         }
         else { clearInterval(intervalSending) }
 
