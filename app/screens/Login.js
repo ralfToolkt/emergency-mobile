@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext} from 'react'
-import {  Text } from 'react-native'
+import {  Text, Alert } from 'react-native'
 import CheckBox from '@react-native-community/checkbox';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading'
 import { UserContext } from '../contexts/UserContext.js'
 import styles from '../../styles'
+import axios from 'axios'
 
 import {
     Container as NativeBaseContainer,
@@ -45,12 +46,26 @@ export default function Login({navigation}) {
         setPassword('')
     }, []);
 
-    function submit() {
+    async function submit() {
         console.log('submit');
-    }
-
-    function register() {
-        console.log('register');
+        const url = 'http://139.162.9.124:1369'
+        if (username !== '' && password !== '') {
+            await axios.post(`${url}/api/auth?user=${username}&password=${password}`)
+                .then(res => {
+                    if (res.data.token) {
+                        console.log(res.data);
+                        setUser(res.data)
+                        navigation.navigate('Emergency')
+                    } else {
+                        Alert.alert('Login Fail', 'Wrong User or Password')
+                    }
+                })
+                .catch(e => {
+                    console.log('error ' + e);
+                    Alert.alert('Server Error', 'Service Error, Please Contact Administrator')
+                })
+        }
+        else { Alert.alert('Login Fail', 'Username and Password is required') }
     }
 
     if (ready) {
@@ -67,7 +82,7 @@ export default function Login({navigation}) {
                             <Form style={styles.formContainer} >
                                 <Item floatingLabel>
                                     <Icon active name="person" />
-                                    <Label style={{paddingBottom: 15}}>Username</Label>
+                                    <Label style={{paddingBottom: 15}}>Username/Email</Label>
                                     <Input
                                         onChangeText={text => setUsername(text)}
                                         value={username}

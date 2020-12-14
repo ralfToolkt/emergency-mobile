@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Text } from 'react-native'
+import { Text, Alert } from 'react-native'
 import CheckBox from '@react-native-community/checkbox';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading'
-import { UserContext } from '../contexts/UserContext.js'
 import styles from '../../styles'
+import axios from 'axios'
 
 import {
     Container as NativeBaseContainer,
@@ -35,24 +35,45 @@ export default function Register({ navigation }) {
     const [showPassword, setShowPassword] = useState(false)
     const [name, setName] = useState('')
     const [email, setemail] = useState('')
-
-    const { user, setUser } = useContext(UserContext)
     useEffect(() => {
         Font.loadAsync({
             Roboto: require("native-base/Fonts/Roboto.ttf"),
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
             ...Ionicons.font
         }).then(() => setReady(true));
-
         setPassword('')
     }, []);
 
-    function submit() {
+    async function submit() {
         console.log('submit');
-    }
-
-    function register() {
-        console.log('register');
+        const url = 'http://139.162.9.124:1369'
+        if (username !== '' && password !== '') {
+            let bodyFormData = new FormData();
+            bodyFormData.append('username', username);
+            bodyFormData.append('password', password);
+            bodyFormData.append('name', name);
+            bodyFormData.append('email', email);
+            await axios({
+                method: 'post',
+                url: `${url}/api/register`,
+                data: bodyFormData,
+                headers: {'Content-Type': 'multipart/form-data'}
+            })
+            // await axios.post(`${url}/api/auth?username=${username}&password=${password}`)
+                .then(res => {
+                    if (res.data.result === 'success') {
+                        Alert.alert('Register Success', 'Please Login Now')
+                        navigation.navigate('Login', {username: username})
+                    } else {
+                        Alert.alert('Register Fail', 'Wrong User or Password')
+                    }
+                })
+                .catch(e => {
+                    console.log('error ' + e);
+                    Alert.alert('Server Error', 'Service Error, Please Contact Administrator')
+                })
+        }
+        else { Alert.alert('Register Fail', 'Username and Password is required') }
     }
 
     if (ready) {
@@ -70,11 +91,10 @@ export default function Register({ navigation }) {
                                 <Text>Credential</Text>
                                 <Item floatingLabel>
                                     <Icon active name="person" />
-                                    <Label style={{ paddingBottom: 15 }}>Username</Label>
+                                    <Label style={{ paddingBottom: 15 }}>Username/Email</Label>
                                     <Input
                                         onChangeText={text => setUsername(text)}
-                                        value={username}
-                                        name="username"
+                                        value={username}                                    
                                         style={styles.inputItem}
                                     />
                                 </Item>
@@ -99,8 +119,7 @@ export default function Register({ navigation }) {
                                     <Label style={{ paddingBottom: 15 }}>Full Name</Label>
                                     <Input
                                         onChangeText={text => setName(text)}
-                                        value={username}
-                                        name="username"
+                                        value={name}                                    
                                         style={styles.inputItem}
                                     />
                                 </Item>
@@ -108,8 +127,7 @@ export default function Register({ navigation }) {
                                     <Label style={{ paddingBottom: 15 }}>Email Address</Label>
                                     <Input
                                         onChangeText={text => setemail(text)}
-                                        value={username}
-                                        name="username"
+                                        value={email}                                    
                                         style={styles.inputItem}
                                     />
                                 </Item>
