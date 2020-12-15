@@ -46,7 +46,7 @@ export default function App() {
     async function getPosition() {
         console.log('get position');
         (async () => {
-            // Location.setGoogleApiKey('AIzaSyBTp9sgdaeSKyXQVn3qBBLR_yBYS19Q05w') 
+            // Location.setGoogleApiKey(GOOGLEAPI) 
             await Location.getCurrentPositionAsync({})
             .then(async res => {
                 setLocation(res)
