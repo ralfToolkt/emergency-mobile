@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Text, Alert } from 'react-native'
-import CheckBox from '@react-native-community/checkbox';
+// import CheckBox from '@react-native-community/checkbox';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading'
@@ -110,7 +110,7 @@ export default function Register({ navigation }) {
                                     />
                                 </Item>
                                 <Item style={{ marginTop: 10, marginBottom: 15}}>
-                                    <CheckBox value={showPassword} onValueChange={() => setShowPassword(!showPassword)} />
+                                    {/* <CheckBox value={showPassword} onValueChange={() => setShowPassword(!showPassword)} /> */}
                                     <Text>Show Password</Text>
                                 </Item>
 

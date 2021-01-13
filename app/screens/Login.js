@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext} from 'react'
 import {  Text, Alert } from 'react-native'
-import CheckBox from '@react-native-community/checkbox';
+// import CheckBox from '@react-native-community/checkbox';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading'
@@ -103,7 +103,7 @@ export default function Login({navigation}) {
                                 </Item>
 
                                 <Item style={{margin: 10}}>
-                                    <CheckBox value={showPassword} onValueChange={() => setShowPassword(!showPassword)} />
+                                    {/* <CheckBox value={showPassword} onValueChange={() => setShowPassword(!showPassword)} /> */}
                                     <Text>Show Password</Text>
                                 </Item>
                                 <Button block info onPress={submit} style={{ marginTop: 15 }}>
